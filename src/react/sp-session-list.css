@@ -1,0 +1,509 @@
+.sp-page-header {
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+.sp-card {
+  width:220px;
+  height:120px;
+  border: 1px solid;
+  margin: 15px;
+}
+
+.sp-card-img {
+  width: 40px;
+  height: 40px;
+  padding-left: 5px;
+  float:left;
+  align-content: center;
+}
+
+.sp-card-title {
+  align-content: center;
+}
+
+.sp-card-text {
+  float:right;
+  font-size: 10pt;
+  flex-wrap: wrap;
+}
+
+.sp-card-button {
+  float:right;
+  font-size: 10pt;
+  flex-wrap: wrap;
+  text-align: right;
+  width:100%;
+}
+
+.sp-badge-buffer {
+  margin-bottom: 5px;
+}
+
+.sp-card-row {
+  width: 100%;
+  position: relative;
+  min-height: 1px;
+  padding-right:15px;
+  padding-left: 15px;
+  float: left;
+}
+
+/*TODO: might not need this one*/
+.sp-float-left-full {
+  float:left;
+}
+
+div.sp-card-container {
+  float: left;
+  /*background:  white;*/
+  width: 300px;
+  height: 200px;
+}
+
+.sp-session-list-container {
+  padding: 10px;
+  height: 260px;
+}
+
+.sp-container {
+  padding: 10px;
+}
+
+.sp-form-row {
+  margin: 5px 0px 5px 0px;
+}
+
+option.sp-form
+div.sp-form {
+  font-size: 14px;
+}
+
+.sp-form-label {
+  font-weight: bold;
+}
+
+.sp-button-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+div.progress {
+  height: 8px;
+}
+.sp-e-session-connect {
+  height : 100%;
+  cursor : pointer;
+}
+
+.sp-session-item {
+  width:2650px;
+  margin-right: 15px;
+}
+
+.sp-session-list-panel {
+  background-colour: #ededed;
+}
+
+.sp-panel-body {
+  padding-top: 0px;
+  background-image: linear-gradient(to bottom, #dddd 0, #ededed 100%);
+}
+
+div.sp-title {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+div.canfar-header {
+  background-color: white;
+  width : 100%;
+}
+
+body {
+  height: 100%;
+}
+
+/* Authentication modal css */
+div.sp-auth-form-title {
+  font-size: 18px;
+}
+
+div.sp-auth-form-body, div.sp-auth-form-body.input {
+  font-size: 14px;
+}
+
+.sp-body {
+  background-color: #e7e7e7;
+  /* set component to 100% of the viewport height (vh) */
+  height:100vh;
+  width:100vw;
+}
+
+
+/* launch form classes */
+
+.sp-form-label {
+  margin-top: 5px;
+  float: right;
+}
+
+/* below this line is the existing/old science-portal css */
+.sp-panel-heading {
+  /*padding: 1px 20px;*/
+  background-color: white;
+}
+
+/* Override bootstrap panel default background image */
+.panel > .panel-heading {
+  background-image: linear-gradient(to bottom, #ffffff 0, #f5f5f5 100%);
+}
+
+.sp-panel {
+  background-color: #e7e7e7;
+  background-image: none;
+  border-color: #ccc;
+}
+
+.sp-progress-bar {
+  width: 100%;
+  height: 8px;
+  margin-bottom: 5px;
+}
+
+.sp-progress-bar-container {
+  height: 8px;
+  /*background-image: linear-gradient(to bottom, #ffffff 0, #ffffff 100%);*/
+  margin-bottom: 0px;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+.sp-button {
+  margin-left: 5px;
+}
+
+.sp-button-group {
+  /* because col-sm-* has padding that misaligns the buttons */
+  padding-left: 0px;
+}
+
+.sp-small-button {
+  height: 22px;
+  width: 22px;
+  text-align: center;
+  padding: 0px;
+  opacity: .6;
+  display: inline-block;
+  float: none;
+  vertical-align: middle;
+}
+
+.sp-vertical-align {
+  display: inline-block;
+  float: none;
+  vertical-align: middle;
+}
+
+.sp-small-button:hover {
+  opacity: .8;
+}
+
+.sp-listpage-header {
+  margin-left: 10px;
+  margin-top: 5px
+}
+
+.sp-header-navbar {
+  margin-bottom: 0px;
+  width: 100%;
+  min-height: 40px;
+}
+
+.panel-body {
+  background-image: linear-gradient(to bottom, #ededed 0, #f5f5f5 100%);
+}
+
+.sp-form-input {
+  height: 36px;
+}
+
+.sp-form-info {
+  padding-top: 7px;
+  display: inline-block;
+  float: none;
+  vertical-align: middle;
+}
+
+.sp-inline-radio {
+  padding: 0px;
+}
+
+#sp_language {
+  padding-top: 4px;
+  padding-bottom: 2px;
+}
+
+#sp_language > label {
+  padding-top: 4px;
+  padding-bottom: 2px;
+}
+
+.sp-display {
+  margin-top: 8px;
+}
+
+.sp-msg-text {
+  text-align: center;
+  font-weight: bold;
+}
+
+.sp-optional-text {
+  font-style: italic;
+  font-size: x-small;
+}
+
+.sp-modal-footer-info-link {
+  text-align: right;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+.glyphicon.fast-right-spinner {
+  -webkit-animation: glyphicon-spin-r 1s infinite linear;
+  animation: glyphicon-spin-r 1s infinite linear;
+}
+
+@-webkit-keyframes glyphicon-spin-r {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes glyphicon-spin-r {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+.spinner-span {
+  margin-left:50px;
+}
+
+.doi-data-locked {
+  margin-left: 20px;
+}
+
+.citation-tooltip {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+
+/* Bootstrap Glyphicon and Popover styling */
+/* todo: move this to canfar-root when cadc.tooltip.js goes over */
+
+.popover-blue {
+  color:mediumblue;
+  margin-left: 4px;
+}
+
+.popover-right {
+  float:right;
+}
+
+.popover {
+  max-width: 200px;
+  min-width: 200px;
+}
+
+.popover-info {
+  margin-top:10px;
+  margin-bottom:10px;
+  color:mediumblue;
+}
+
+.glyphicon-question-sign, .glyphicon-remove-circle:hover {
+  cursor: pointer;
+}
+
+
+.panel-heading .accordion-toggle:after {
+  /* symbol for "opening" panels */
+  font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+  content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+  float: right;        /* adjust as needed */
+  color: grey;         /* adjust as needed */
+}
+.panel-heading .accordion-toggle.collapsed:after {
+  /* symbol for "collapsed" panels */
+  content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+}
+
+
+.panel-heading .accordion-toggle {
+  font-size: small;
+}
+
+
+/* Session List styling */
+
+.sp-session-add {
+  color: gray;
+  background-color: #e6e6e6;
+}
+
+.sp-session-help-text {
+  font-size: 15px;
+}
+
+/* nav link element class (session list) - old */
+.sp-session-link {
+  /*text-align: center!important;*/
+  /*font-size: 24px;*/
+  margin-right: 5px;
+  margin-bottom: 15px;
+  width: 270px;
+}
+
+/* nav link title - not part of link */
+.sp-session-name {
+  font-size: 12px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.sp-session-panel-body {
+  padding-left: 10;
+  padding-bottom: 0;
+}
+
+/* nav link box */
+.sp-session-connect {
+  overflow: hidden;
+}
+
+/* nav link title (below icon */
+.sp-session-link-type {
+  text-align: center!important;
+  font-size: 12px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.sp-button-bar {
+  padding: 5 10 5 10;
+  border: none;
+  background-color: #ffffff;
+}
+/* add session button just below session list */
+.sp-button-bar-button {
+  border: none;
+  background-color: #ffffff;
+}
+
+/* delete button in upper right of session list item */
+button.sp-session-delete {
+  float:right;
+  font-size: 10px;
+  backgound-color: #e7e7e7;
+  margin-top: -1px;
+  border: darkgray;
+  border-style: solid;
+  border-width: thin;
+  -webkit-border-radius: 5px;
+}
+
+.sp-icon-desktop {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.sp-icon-img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Used for controlling accessibility of session list items */
+.sp-link-container {
+  width: 100px;
+  height: 90px;
+  position: relative;
+  border-style: groove;
+  border-color: aliceblue;
+  -webkit-border-radius: 5px;
+}
+
+.sp-link-disable,
+.sp-session-ctl {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.sp-session-ctl {
+  height: 14px;
+  -webkit-border-radius: 5px;
+  margin-right: 1px;
+  z-index: 50; /* always on top */
+}
+
+.sp-link-disable {
+  z-index: 10;
+  background-color: lightgray;
+  opacity: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
+  font-style: italic;
+}
+
+.sp-button-disable {
+  opacity: 20%;
+}
+
+.sp-button-disable:hover {
+  cursor:not-allowed
+}
+
+.sp-session-anchor {
+  padding-top: 15px;
+}
+
+.sp-close {
+  float:right;
+}
+
+.sp-b-tooltip > .tooltip > .tooltip-inner {
+  color:black;
+  background-color: darkgray;
+}
+
+.sp-b-tooltip > .tooltip.top .tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px 5px 0;
+  border-top-color: darkgray;
+}
+
+
+
+
