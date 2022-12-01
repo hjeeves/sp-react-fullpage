@@ -20,6 +20,10 @@ class SciencePortalModal extends React.Component {
     this.setState({modalData: nextProps.modalData});
   }
 
+  handleReload = () => {
+    window.location.reload()
+  }
+
   openModal = () => this.setState({modalData: {'isOpen': true}});
   closeModal = () => this.setState({modalData: {'isOpen': false}});
 
@@ -56,7 +60,6 @@ class SciencePortalModal extends React.Component {
       canfarURL = this.state.baseURLcanfar
     }
 
-
     return (
       <>
         <Modal
@@ -73,7 +76,7 @@ class SciencePortalModal extends React.Component {
             <span className="spinner-span">{showSpinner && <Spinner animation="border" variant='primary' size='sm'/> }</span>
 
             <div id="infoHome" class="sp-modal-footer-info-link">
-              {showHome && <a href={canfarURL} class="account_access_info" title="CANFARHome" target="_blank">
+              {showHome && <a href={canfarURL} className="account_access_info" title="CANFARHome" target="_blank">
                 CANFAR Home</a>}
             </div>
 
@@ -82,7 +85,7 @@ class SciencePortalModal extends React.Component {
             <Button variant="secondary" onClick={this.closeModal}>
               Close
             </Button>
-            {showReload && <Button class="sp-e-reload" id="pageReloadButton">Reload Portal</Button>}
+            {showReload && <Button className="sp-e-reload" id="pageReloadButton" onClick={this.handleReload}>Reload Portal</Button>}
           </Modal.Footer>
         </Modal>
       </>

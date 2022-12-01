@@ -55,7 +55,7 @@ class CanfarLoginModal extends React.Component {
           <Modal.Body className="sp-auth-form-body">
             <form className="access-control" id="modalloginForm" role="form"
                   method="post"
-                  action="/access/login">
+                  action="https://www.canfar.net/access/login">
               <div className="modal-body">
                 <span id="modal_login_fail" className="text-danger help-block pull-left"></span>
                 <div className="form-group">

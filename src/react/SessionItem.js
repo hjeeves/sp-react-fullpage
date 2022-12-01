@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons/faTrashAlt'
 
 
 import './css/index.css';

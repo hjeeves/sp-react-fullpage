@@ -33,13 +33,17 @@
     *    }
    */
   function PortalApp(inputs) {
+    var _reactApp = window.SciencePortalApp
+
     var portalCore = new cadc.web.science.portal.core.PortalCore(inputs)
     var portalSessions = new cadc.web.science.portal.session.PortalSession(inputs)
     var portalForm = new cadc.web.science.portal.form.PortalForm(inputs)
     var _selfPortalApp = this
-    var _reactApp = window.SciencePortalApp
 
     this.baseURL = inputs.baseURL
+    // TODO: this is for dev or situations where a registry app
+    // might not be available
+    var URLOverrides = inputs.URLOverrides
     this.isPolling = false
 
     // Used for populating type dropdown and displaying appropriate form fields
@@ -54,13 +58,18 @@
 
     function init() {
       attachListeners()
-      // loads from session_type_map_en.json. No known timing issues
+      // loads from session_type_map_en.json.
+      // Timing issues can occur on very fast systems, so this issues it's own
+      // event when finished to control when the next stage of portal initialization occurs
       portalForm.loadSessionTypeMap()
+    }
+
+    function continueInit() {
 
       // add tooltips
       // TODO: this is done differently for bootstrap 5, removing jquery
       //$('[data-toggle="tooltip"]').tooltip()
-      
+
       // Nothing happens if user is not authenticated, so no other page
       // load information is done until this call comes back (see onAuthenticated event below)
       // onAuthenticated event triggered if everything is OK.
@@ -90,6 +99,7 @@
       //})
 
       // This element is on the info modal
+      // TODO: the info modal isn't rendered until it's rendered...
       //$('#pageReloadButton').click(handlePageRefresh)
       //$('.sp-e-reload').click(handlePageRefresh)
 
@@ -103,7 +113,7 @@
         // onServiceURLOK comes from here
         // Contacts the registry to discover where the sessions web service is,
         // builds endpoints used to manage sessions, get session, context, image lists, etc.
-        portalCore.init()
+        portalCore.init(URLOverrides)
       })
 
       portalCore.subscribe(portalCore, cadc.web.science.portal.core.events.onServiceURLOK, function (e, data) {
@@ -189,6 +199,7 @@
 
       // Portal Form listeners
       portalCore.subscribe(portalForm, cadc.web.science.portal.form.events.onLoadFormDataDone, initForm)
+      portalCore.subscribe(portalForm, cadc.web.science.portal.form.events.onLoadTypeMapDone, continueInit)
       portalCore.subscribe(portalForm, cadc.web.science.portal.form.events.onLoadContextDataError, handleServiceError)
       portalCore.subscribe(portalForm, cadc.web.science.portal.form.events.onLoadImageDataError, handleServiceError)
 
@@ -501,14 +512,13 @@
       window.open(sessionData.connecturl, '_blank')
     }
 
-    ///**
-    // * Triggered from 'Reload' button on info modal
-    // */
-    //function handlePageRefresh() {
-    //  window.location.reload()
-    //}
+    /**
+     * Triggered from 'Reload' button on info modal
+     */
+    function handlePageRefresh() {
+      window.location.reload()
+    }
 
-    // TODO: this might be going away
     function showLaunchForm(show) {
       if (show === true) {
         $('#sp_launch_form_div').removeClass('hidden')
@@ -517,7 +527,6 @@
       }
     }
 
-    // TODO: might be going away
     /**
      * Triggered from '+' button on session list button bar
      */
@@ -548,8 +557,7 @@
      */
     function handleConfirmedDelete(event) {
       var sessionData = $(event.currentTarget).data()
-      //portalCore.hideConfirmModal(_reactApp)
-      //portalCore.setInfoModal("Delete Request", "Deleting session " + sessionData.name + ", id " + sessionData.id, false, false, true)
+      portalCore.hideConfirmModal(_reactApp)
       portalCore.setModal(_reactApp, 'Delete Request', 'Deleting session', true, false, false)
       portalSessions.deleteSession(sessionData.id)
     }
@@ -624,29 +632,6 @@
 
     }
 
-    // WAS Used in POST for /session endpoint
-    //function gatherFormData() {
-    //  var _formdata = $('#session_request_form').serializeArray()
-    //  var _prunedFormData = new FormData();
-    //
-    //  _formdata.forEach(function(currentValue, index, arr) {
-    //    _prunedFormData.append(currentValue.name, currentValue.value)
-    //  })
-    //  return _prunedFormData
-    //}
-
-    //function handleFormSubmit(e) {
-    //  e.preventDefault();
-    //  var _prunedFormData = new FormData();
-    //
-    //  for (var i=0; i< e.target.length; i++) {
-    //    var currentValue = e.target[i]
-    //    _prunedFormData.append(currentValue.name, currentValue.value)
-    //    console.log(currentValue.name + ": " + currentValue.value)
-    //  }
-    //}
-
-
     // ---------------- GETs ----------------
     // ------- Dropdown Ajax functions
 
@@ -681,33 +666,16 @@
       _curSessionType = sessionType
     }
 
-    //function _resetFormDropdown(selector, defaultVar) {
-    //
-    //  // Clear existing selections
-    //  $('#' + selector + ' option').each(function() {
-    //      if ($(this).attr("val") === defaultVar) {
-    //      $(this).prop('selected',true)
-    //        // break out of the loop
-    //        $(this).change()
-    //        return false
-    //    }
-    //  });
-    //}
+    // TODO: this is for testing only
+    function sortSessionList(theList) {
+      return portalSessions.sortSessions(theList)
+    }
 
-    //function handleResetFormState(event) {
-    //  event.preventDefault()
-    //  // Clear messages
-    //  portalCore.clearAjaxAlert()
-    //  portalCore.setProgressBar('okay')
-    //  var sessionTypeDefault = portalForm.getSessionTypeDefault()
-    //
-    //  _resetFormDropdown("sp_session_type", sessionTypeDefault)
-    //  // reload the form for default session type
-    //  setLaunchFormForType(sessionTypeDefault, true)
-    //}
 
     $.extend(this, {
-      init: init
+      init: init,
+      sortSessionList: sortSessionList,
+      portalCore: portalCore
     })
   }
 

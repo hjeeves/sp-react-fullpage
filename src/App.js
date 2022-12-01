@@ -7,10 +7,16 @@ import SciencePortalForm from "./react/SciencePortalForm";
 import SciencePortalModal from "./react/SciencePortalModal";
 import SPConfirmModal from "./react/SPConfirmModal";
 
-import Container from 'react-bootstrap/Container';
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import Button from "react-bootstrap/Button";
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import Row from 'react-bootstrap/Row';
+import Tooltip from 'react-bootstrap/Tooltip';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRefresh } from '@fortawesome/free-solid-svg-icons/faRefresh'
 
 import './react/css/App.css';
 // TODO: is this file *and* App.css necessary?
@@ -21,10 +27,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // This is after bootstrap so values can be overridden
 import './react/sp-session-list.css';
+import Tab from "react-bootstrap/Tab";
 
 
-// TODO: this is test data that would be in a test .js file,
-// injected the say way that data from science-portal app would be
+// TODO: need to have a placeholder displayed if the session list
+// is empty
 const SESSION_LIST_DATA = [
   {
     "name": "TESTDATAnotebook",
@@ -139,6 +146,12 @@ function handleLogin(e) {
 }
 
 
+const ALERT_DATA =  {
+  "show": true,
+    "type": "secondary",
+    "message": "test message"
+}
+
 class SciencePortalApp extends React.Component {
 
   constructor(props) {
@@ -148,7 +161,8 @@ class SciencePortalApp extends React.Component {
       modalData: MODAL_DATA,
       fData: FORM_DATA,
       urls: URLS,
-      confirmModalData: {}
+      confirmModalData: {},
+      alertData: ALERT_DATA
     };
   }
 
@@ -178,6 +192,10 @@ class SciencePortalApp extends React.Component {
     this.setState({urls: sURLs})
   }
 
+  setAjaxAlert(alertData) {
+    this.setState( {alertData: alertData})
+  }
+
   render() {
     return (
       <Container fluid className="bg-white">
@@ -185,7 +203,7 @@ class SciencePortalApp extends React.Component {
             baseURLcadc={this.state.urls.baseURLcadc}
             baseURLcanfar={this.state.urls.baseURLcanfar}
             openStackURL="https://arbutus-canfar.cloud.computecanada.ca"
-            isAuthenticated={false}
+            isAuthenticated={true}
             authenticatedUser="Test User"
             loginHandler={handleLogin}
           ></CanfarNavbar>
@@ -197,7 +215,22 @@ class SciencePortalApp extends React.Component {
 
             <Container fluid className="bg-white sp-session-list-container rounded-1">
               <Row><Col>
-                <div className="sp-title sp-panel-heading">Active Sessions</div>
+                <div className="sp-title sp-panel-heading">Active Sessions
+                  <span className="sp-header-button">
+                    <OverlayTrigger
+                      key="top"
+                      placement="top"
+                      className="sp-b-tooltip"
+                      overlay={
+                        <Tooltip>
+                          refresh session list
+                        </Tooltip>
+                      }
+                      >
+                      <Button size="sm" variant="outline-primary"><FontAwesomeIcon icon={faRefresh}/></Button>
+                    </OverlayTrigger>
+                  </span>
+                </div>
               </Col></Row>
 
               {/*  attribute 'striped' can be put on for when app is busy */}
@@ -207,7 +240,6 @@ class SciencePortalApp extends React.Component {
               </Col></Row>
 
               <Row xs={1} md={3} className="g-4">
-                {/*// TODO: how do you sort these?*/}
                 {this.state.sessionData.map(mapObj => (
                   <Col className="sp-card-container">
                     <SessionItem
@@ -234,16 +266,24 @@ class SciencePortalApp extends React.Component {
             {/*</Col></Row>*/}
             </Container>
 
-            <SciencePortalForm fData={this.state.fData}/>
+            <SciencePortalForm fData={this.state.fData}  alertData={this.state.alertData}/>
           </Container>
         {this.state.modalData.msg !== undefined &&  <SciencePortalModal modalData={this.state.modalData}
-                                                                                       baseURLCanfar={this.state.urls.baseURLcanfar}/> }
-        {this.state.confirmModalData.confirmData !== undefined && <SPConfirmModal modalData={this.state.confirmModalData}/>}
+                                                                        baseURLCanfar={this.state.urls.baseURLcanfar}/> }
+        {this.state.confirmModalData.isOpen === true &&
+        <SPConfirmModal modalData={this.state.confirmModalData}/>}
       </Container>
 
     );
   }
+  componentDidMount () {
+    window.SciencePortalApp = this;
+    window.runStartupTasks();
+  }
+
 }
+
+
 
 export default SciencePortalApp;
 
@@ -253,8 +293,10 @@ export default SciencePortalApp;
 // For development, set the elementID here to 'root',
 // Then for build prior to deployment, set it to the id of the
 // DOM element this component should render itself into
-const root = ReactDOM.createRoot(document.getElementById("root"));
-//const root = ReactDOM.createRoot(document.getElementById("react-mountpoint"));
+//const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("react-mountpoint"));
+
+
 
 // ref= value here is setting the window.SciencePortalApp hook so the program
 // this is embedded in can inject data and listen to DOM events

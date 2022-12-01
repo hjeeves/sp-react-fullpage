@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -44,10 +42,8 @@ class CanfarNavbar extends React.Component {
       }
 
   return (
-
-
     <div className="canfar-header">
-    <Navbar>
+    <Navbar expand="md">
       <Container fluid>
         <Navbar.Brand href="#home"><img src={this.state.baseURLcanfar + '/css/images/logo.png'}></img></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

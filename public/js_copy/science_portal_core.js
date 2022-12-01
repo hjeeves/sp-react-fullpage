@@ -71,10 +71,11 @@
 
     var _listProgressBar = new cadc.web.CadcProgressBar(_listBarOpts)
 
-    function init() {
+    function init(overrideURLs) {
       _progressBar.init()
       _listProgressBar.init()
-      setSessionServiceURLs()
+
+      setSessionServiceURLs(overrideURLs)
     }
 
     // ------------ Page state management functions ------------
@@ -121,20 +122,20 @@
       modalLink.closeConfirmModal()
     }
 
-    function clearAjaxAlert() {
+    function clearAjaxAlert(reactAppLink) {
       $('.alert-danger').addClass('hidden')
       $('.alert-success').addClass('hidden')
       setProgressBar('okay')
     }
 
     // Communicate AJAX progress and status using progress bar
-    function setProgressBar(state) {
+    function setProgressBar(state, reactAppLink) {
       _progressBar.setProgressBar(state)
       // TODO: this will need it's own function so it can act separately
       _listProgressBar.setProgressBar(state)
     }
 
-    function setAjaxFail(message) {
+    function setAjaxFail(message, reactAppLink) {
       $('#status_code').text(message.status)
       $('#error_msg').text(getRcDisplayText(message))
       $('.alert-danger').removeClass('hidden')
@@ -142,17 +143,23 @@
       hideModals()
     }
 
-    function setAjaxSuccess(message) {
-      $('#alert_msg').text(message)
-      $('.alert-success').removeClass('hidden')
-      setProgressBar('okay')
-      hideModals()
+    function setAjaxSuccess(message, reactAppLink) {
+      //$('#alert_msg').text(message)
+      //$('.alert-success').removeClass('hidden')
+      //setProgressBar('okay')
+      //hideModals()
+      var alertData = {
+        "show": true,
+        "type": "success",
+        "message": "test message from sp"
+      }
+      _reactAppLink.setAjaxAlert(alertData)
     }
 
-    function handleAjaxError(request) {
+    function handleAjaxError(request, reactAppLink) {
       hideInfoModal(true)
       setProgressBar('error')
-      setAjaxFail(request)
+      setAjaxFail(request, reactAppLink)
     }
 
     // ---------- Event Handling Functions ----------
@@ -184,29 +191,34 @@
 
     // ------ Set up web service URLs ------
 
-    function setSessionServiceURLs() {
-      setInfoModal('Loading Page Resources', 'Locating session web service.', false, true, true)
-      Promise.resolve(prepareRegistry())
-        .then(function(serviceURL) {
-            if (typeof serviceURL != 'undefined') {
+    function setSessionServiceURLs(URLs) {
+      if (typeof URLs !== "undefined") {
+        _selfPortalCore.sessionServiceURLs = URLs
+        trigger(_selfPortalCore, cadc.web.science.portal.core.events.onServiceURLOK)
+      } else {
+        setInfoModal('Loading Page Resources', 'Locating session web service.', false, true, true)
+        Promise.resolve(prepareRegistry())
+          .then(function (serviceURL) {
+              if (typeof serviceURL != 'undefined') {
 
-              _selfPortalCore.sessionServiceURLs = {
-                'base': serviceURL,
-                'session': serviceURL + '/session',
-                'context': serviceURL + '/context',
-                'images': serviceURL + '/image'
+                _selfPortalCore.sessionServiceURLs = {
+                  'base': serviceURL,
+                  'session': serviceURL + '/session',
+                  'context': serviceURL + '/context',
+                  'images': serviceURL + '/image'
+                }
+                _selfPortalCore.hideInfoModal()
+                trigger(_selfPortalCore, cadc.web.science.portal.core.events.onServiceURLOK)
+              } else {
+                // Don't hide modal as the page isn't ready to be interacted with yet
+                trigger(_selfPortalCore, cadc.web.science.portal.core.events.onServiceURLFail)
               }
-              _selfPortalCore.hideInfoModal()
-              trigger(_selfPortalCore, cadc.web.science.portal.core.events.onServiceURLOK)
-            } else {
-              // Don't hide modal as the page isn't ready to be interacted with yet
-              trigger(_selfPortalCore, cadc.web.science.portal.core.events.onServiceURLFail)
             }
-          }
-        )
-        .catch(function(message) {
-          trigger(_selfPortalCore, cadc.web.science.portal.core.events.onServiceURLFail)
-        })
+          )
+          .catch(function (message) {
+            trigger(_selfPortalCore, cadc.web.science.portal.core.events.onServiceURLFail)
+          })
+      }
     }
 
     // ------------ Rendering & display functions ------------
@@ -336,18 +348,22 @@
     // ------------ Authentication functions ------------
 
     function checkAuthentication() {
-      userManager = new cadc.web.UserManager()
+      // TODO: temporary, for testing where there's no access to
+      // access/login
+      setAuthenticated()
 
-      // From cadc.user.js. Listens for when user logs in
-      userManager.subscribe(cadc.web.events.onUserLoad,
-          function (event, data) {
-            // Check to see if user is logged in or not
-            if (typeof(data.error) !== 'undefined') {
-              setNotAuthenticated()
-            } else {
-              setAuthenticated()
-            }
-          })
+      //userManager = new cadc.web.UserManager()
+      //
+      //// From cadc.user.js. Listens for when user logs in
+      //userManager.subscribe(cadc.web.events.onUserLoad,
+      //    function (event, data) {
+      //      // Check to see if user is logged in or not
+      //      if (typeof(data.error) !== 'undefined') {
+      //        setNotAuthenticated()
+      //      } else {
+      //        setAuthenticated()
+      //      }
+      //    })
     }
 
     // #auth_modal is in /canfar/includes/_application_header.shtml

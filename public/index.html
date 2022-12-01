@@ -24,11 +24,25 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+
+    <script type="application/javascript" src="https://www.canfar.net/canfar/javascript/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="https://www.canfar.net/cadcJS/javascript/cadc.registry-client.js"></script>
+    <script type="application/javascript" src="https://www.canfar.net/canfar/javascript/cadc.progressbar.js"></script>
+    <script type="text/javascript" src="canfarRootCopy/cadc.user.js"></script>
+    <script type="text/javascript" src="https://www.canfar.net/cadcJS/javascript/login.js"></script>
+
+    <script type="application/javascript" src="js_copy/science_portal_core.js"></script>
+    <script type="application/javascript" src="js_copy/science_portal_session.js"></script>
+    <script type="application/javascript" src="js_copy/science_portal_form.js"></script>
+    <script type="application/javascript" src="js_copy/science_portal.js"></script>
+
+    <script type="application/javascript" src="./test/test_data.js"></script>
+
     <title>React App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="react-mountpoint"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -40,4 +54,48 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+
+  <script type="application/javascript">
+
+
+// TODO: could be that this is a better way to have the react app
+// work within the jsp as well.
+// Everything in the public directory is likely to have to be yanked as it'll get put into the build directory?
+// I'm hoping it can be the dev environment, and can be pointed at whichever environent it needs to point
+// at.
+    //$(document).ready(function() {
+    window.runStartupTasks = () => {
+    //  widget.doSomething();
+    //}
+    //  reactApp = $("#react-moutpoint")
+
+    // Set up controller for Science Portal Session Launch page
+      launch_js = new cadc.web.science.portal.PortalApp({
+        baseURL: "https://www.canfar.net",
+        sessionsResourceID: 'ivo://cadc.nrc.ca/skaha',
+        URLOverrides: testSessionURLs
+        //reactApp: reactApp
+      })
+
+      launch_js.init()
+
+      //var theList = testSessionList
+      //var sortedList = launch_js.sortSessionList(theList)
+
+      testSessionListSort(SESSION_DISPLAY_DATA)
+      testModal("bla")
+
+      launch_js.portalCore.setAjaxSuccess("test from here", window.SciencePortalApp)
+
+      //launch_js.setSessionURLs(testSessionURLs)
+
+      //var sortedDisplayList = launch_js.sortSessionList(SESSION_DISPLAY_DATA)
+      //
+      //window.SciencePortalApp.updateSessionList(sortedDisplayList)
+
+
+    }
+    //);
+
+  </script>
 </html>

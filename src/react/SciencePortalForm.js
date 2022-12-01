@@ -2,6 +2,7 @@ import React from 'react';
 import './css/index.css';
 
 import Accordion from 'react-bootstrap/Accordion';
+import Alert from 'react-bootstrap/Alert'
 import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 import Button from "react-bootstrap/Button";
 import Card from 'react-bootstrap/Card';
@@ -12,9 +13,13 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import Row from 'react-bootstrap/Row';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons";
+import {faRefresh} from "@fortawesome/free-solid-svg-icons/faRefresh";
 
 
 function CustomToggle({ children, eventKey }) {
@@ -23,9 +28,11 @@ function CustomToggle({ children, eventKey }) {
   });
 
   return (
-    <Button id="formButton" variant="outline-success" onClick={decoratedOnClick}>
-      {children}
-    </Button>
+ <Button id="formButton" size="sm" variant="outline-success" onClick={decoratedOnClick}>
+Launch Session
+ {/*{children}*/}
+
+</Button>
   );
 }
 
@@ -35,14 +42,34 @@ class SciencePortalForm extends React.Component {
     super(props)
     this.state = {
       fData:props.fData,
+      alertData: props.alertData
     }
     this.handleSubmit = props.fData.submitHandler
     this.handleChangeType = props.fData.changeTypeHandler
+    this.alertType = "success"
+    this.barType= "success"
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ fData: nextProps.fData });
   }
+
+  //renderTooltip(text, children) {
+  //  return <OverlayTrigger
+  //    trigger="click"
+  //    key="top"
+  //    placement="top"
+  //    rootClose={true}
+  //    overlay={
+  //      <Tooltip>
+  //        text
+  //      </Tooltip>
+  //    }
+  //  >
+  //{children}
+  //  </OverlayTrigger>
+  //
+  //}
 
   renderPopover(headerText, bodyText) {
     return <OverlayTrigger
@@ -63,19 +90,43 @@ class SciencePortalForm extends React.Component {
       </OverlayTrigger>
   }
 
+  showForm() {
+    // TODO - some form of placeholder that's not beta?
+  }
+
+
+  // TODO: consider making the Accordion a Tab setup
   render() {
     return (
       <Container fluid className="bg-white sp-container rounded-1">
+
         {/*<Accordion defaultActiveKey="0">  This one will have the accordian open */}
-          <Accordion >
-          <Card>
-            <Card.Header className="bg-white sp-container">
-              <CustomToggle eventKey="0">Launch Session</CustomToggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>
+        {/*  <Accordion >*/}
+        <Tabs>
+          <Tab eventKey="NewSession" title="New Session">
+          {/*<Card>*/}
+          {/*  <Card.Header className="bg-white sp-container">*/}
+              {/*<CustomToggle eventKey="0">New Session</CustomToggle>*/}
+              {/*  <OverlayTrigger*/}
+              {/*    key="top"*/}
+              {/*    placement="top"*/}
+              {/*    className="sp-b-tooltip"*/}
+              {/*    overlay={*/}
+              {/*      <Tooltip>*/}
+              {/*        refresh session list*/}
+              {/*      </Tooltip>*/}
+              {/*    }*/}
+              {/*    >*/}
+              {/*    <Button size="sm" variant="outline-primary"><FontAwesomeIcon icon={faRefresh}/></Button>*/}
+              {/*</OverlayTrigger>*/}
+
+            {/*</Card.Header>*/}
+            {/*<Accordion.Collapse eventKey="0">*/}
+            {/*  <Card.Body>*/}
                 <Row><Col>
-                  <ProgressBar variant="success" now={100} className="sp-progress-bar" />
+                  <ProgressBar variant={this.barType} now={100} className="sp-progress-bar" />
+                  {this.state.alertData.show === true && <Alert key={this.state.alertData.type} variant={this.state.alertData.type}>
+                    {this.state.alertData.message} </Alert> }
                 </Col></Row>
                 <Form onSubmit={this.state.fData.submitHandler} className="sp-form">
                   <Row className="sp-form-row">
@@ -90,6 +141,7 @@ class SciencePortalForm extends React.Component {
                         value={this.state.fData.selectedType}
                         onChange={this.state.fData.changeTypeHandler}
                         name="type"
+                        size="sm"
                       >
                         {this.state.fData.types.map(mapObj => (
                           <option className="sp-form" name={mapObj} value={mapObj}>{mapObj}</option>
@@ -124,8 +176,8 @@ class SciencePortalForm extends React.Component {
                       <Form.Control
                           type="text"
                           placeholder="Enter session name"
-                          //defaultValue={this.state.fData.sessionName}
-                          value={this.state.fData.sessionName}
+                          defaultValue={this.state.fData.sessionName}
+                          //value={this.state.fData.sessionName}
                           name="name"
                           className="sp-form"
                       />
@@ -171,17 +223,22 @@ class SciencePortalForm extends React.Component {
                     {/* placeholder column so buttons line up with form entry elements */}
                     </Col>
                     <Col md={6}>
-                      <Button variant="primary" type="submit">Launch</Button>
-                      <Button variant="secondary" type="reset">Reset</Button>
+                      <Button variant="primary" type="submit"  size="sm" className="sp-form-button">Launch</Button>
+                      <Button variant="secondary" size="sm" type="reset" className="sp-reset-button">Reset</Button>
                     </Col>
                   </Row>
                 </Form>
 
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
+              {/*</Card.Body>*/}
+            {/*</Accordion.Collapse>*/}
+          {/*</Card>*/}
 
-        </Accordion>
+          </Tab>
+        <Tab eventKey="SystemStats"  title="System Stats">
+sdfd
+        </Tab>
+        </Tabs>
+        {/*</Accordion>*/}
       </Container>
     )
   }
