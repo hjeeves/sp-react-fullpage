@@ -33,13 +33,17 @@ matches what's been put in your local host file.)
 
 
 ### Getting Going
-Clone the repo
-install project dependencies using npm
-set /etc/hosts entry 
-set up .env file to match /etc/hosts entry
-use 'npm start' to start up the local instance
+1) Clone the repo
+2) Open in your ide, install project dependencies using npm (run 'npm install', it reads the package.json file)
+ The node_modules folder will be addedin this step. First index can take some time.
+3) Set /etc/hosts entry for local URL
+4) Set up .env file to match /etc/hosts entry
+5) Use 'npm start' to start up the local instance
 
-(Q: does npm install the dependencies here, based on the package.json file?)
+NOTE: current test configuration points to rc, so you'll need the vpn up for the registry
+client reference to work, and you'll need to log in to rc in order for skaha permissions
+to work.
+
 
 ### Quick working process:
 1) edit code in either /public/dev/js or /react directories
