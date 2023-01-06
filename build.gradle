@@ -27,9 +27,8 @@ dependencies {
     implementation 'org.opencadc:cadc-util:[1.6,)'
     implementation 'org.apache.commons:commons-configuration2:2.3'
     implementation 'commons-net:commons-net:3.6'
-    implementation 'org.seleniumhq.selenium:selenium-java:3.+'
     implementation 'com.opencsv:opencsv:[5.1,6.0)'
-    testImplementation 'org.opencadc:cadc-web-test:[2.1.1,3.0.0)'
+//    testImplementation 'org.opencadc:cadc-web-test:[2.1.1,3.0.0)'
 
     runtime 'javax.servlet.jsp.jstl:jstl-api:1.2'
     runtime 'javax.servlet:jstl:1.2'
@@ -39,16 +38,7 @@ dependencies {
 
 sourceCompatibility = '1.8'
 group = 'ca.nrc.cadc'
-version = '1009'
-
-ext {
-    intTest_user_name = 'CADCtest'
-    intTest_user_password = 'sywymUL4'
-
-    // Change this value to test other locations, such as Production or RC.
-    intTest_default_web_app_url = 'https://rc-www.canfar.net'
-    intTest_default_web_app_endpoint = '/science-portal'
-}
+version = '1011'
 
 war {
     // Trying to fix static file caching on new build.
@@ -61,102 +51,6 @@ war {
     archiveName = 'science-portal##' + project.version + '.war'
 }
 
-sourceSets {
-    intTest {
-        java {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-            srcDir file('src/intTest/java')
-        }
-
-        // set the intTest resource directory
-        resources.srcDir file('src/intTest/resources')
-
-        // also grab the resources from the test source set
-        // resources.srcDirs += file('src/test/resources')
-        resources.srcDirs += new File(System.getenv('A') + '/test-certificates/')
-    }
-}
-
-
-tasks.withType(Test) {
-    // Assign all Java system properties from
-    // the command line to the tests
-    systemProperties System.properties
-}
-
-
-configurations {
-    intTestCompile
-    intTestCompile.extendsFrom(testCompile)
-}
-
-idea {
-    module {
-        //and some extra test source dirs
-        testSourceDirs += file('src/intTest/java')
-        scopes.TEST.plus += [ configurations.intTestCompile ]
-    }
-}
-
-['firefox', 'chrome'].each { driver ->
-    task "intTest${driver.capitalize()}"(type: Test) { driverTest ->
-        testClassesDirs = sourceSets.intTest.output.classesDirs
-        classpath = sourceSets.intTest.runtimeClasspath
-        reports {
-            html.destination = reporting.file("$name/html")
-        }
-        dependencies {
-            intTestCompile 'junit:junit:4.+'
-            intTestImplementation 'org.opencadc:cadc-web-test:[2.1.1,3.0.0)'
-            intTestCompile 'org.seleniumhq.selenium:selenium-java:3.+'
-        }
-
-        // set the configuration context
-        testClassesDirs = sourceSets.intTest.output.classesDirs
-        classpath = sourceSets.intTest.runtimeClasspath
-
-        // run the tests always
-        outputs.upToDateWhen { false }
-
-        copy {
-            from System.getenv('A') + '/etc/'
-            into 'build/resources/intTest'
-            include 'DelegationTokenKey.priv'
-            rename 'DelegationTokenKey.priv', 'RsaSignaturePriv.key'
-        }
-        copy {
-            from System.getenv('A') + '/etc/'
-            into 'build/resources/intTest'
-            include 'DelegationTokenKey.pub'
-            rename 'DelegationTokenKey.pub', 'RsaSignaturePub.key'
-        }
-
-
-        systemProperty "driver", "${driver}"
-
-        if (project.hasProperty('intTest_selenium_server_url')) {
-            systemProperty 'selenium.server.url', project.intTest_selenium_server_url
-            logger.info('Running browser tests on ' + project.intTest_selenium_server_url)
-        }
-        else {
-            systemProperty 'selenium.server.url', 'http://cadcint2.cadc.dao.nrc.ca:3444'
-        }
-
-        if (project.hasProperty('intTest_web_app_url')) {
-            systemProperty 'web.app.url', project.intTest_web_app_url
-        }
-        else {
-            systemProperty 'web.app.url', project.intTest_default_web_app_url
-        }
-
-        systemProperty 'user.name', project.intTest_user_name
-        systemProperty 'user.password', project.intTest_user_password
-
-        maxParallelForks = 1
-    }
-}
-
 task buildReactApp(type: NodeTask, dependsOn: 'npmInstall') {
     script = project.file('node_modules/webpack/bin/webpack.js')
     args = [
@@ -166,6 +60,13 @@ task buildReactApp(type: NodeTask, dependsOn: 'npmInstall') {
     ]
 }
 
+// Copy js and json files from dev working area to distribution assembly folder
+tasks.register('copyDevToDist', Copy) {
+    from layout.projectDirectory.file("public/dev")
+    into layout.projectDirectory.file("src/main/webapp/dist")
+}
+
 processResources.dependsOn 'buildReactApp'
-clean.delete << file('node_modules')
-clean.delete << file('src/main/resources/static/dist')
+assemble.dependsOn 'copyDevToDist'
+
+clean.delete << file('src/main/webapp/dist')

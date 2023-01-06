@@ -21,6 +21,6 @@ afterEach(() => {
 
 test('renders learn react link', () => {
   render(<SciencePortalApp />);
-  const linkElement = screen.getByText(/Science Portal/i);
+  const linkElement = screen.getByText(/Science Portals/i);
   expect(linkElement).toBeInTheDocument();
 });

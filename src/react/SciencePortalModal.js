@@ -55,6 +55,10 @@ class SciencePortalModal extends React.Component {
     if (this.state.modalData.showHome !== undefined) {
       showHome = this.state.modalData.showHome
     }
+    var showClose = false
+    if (this.state.modalData.showClose !== undefined) {
+      showClose = this.state.modalData.showClose
+    }
     var canfarURL = ""
     if (this.state.baseURLcanfar !== undefined) {
       canfarURL = this.state.baseURLcanfar
@@ -73,19 +77,20 @@ class SciencePortalModal extends React.Component {
           </Modal.Header>
           <Modal.Body>
             {modalMsg}
-            <span className="spinner-span">{showSpinner && <Spinner animation="border" variant='primary' size='sm'/> }</span>
+            <span className="spinner-span">{showSpinner === true && <Spinner animation="border" variant='primary' size='sm'/> }</span>
 
-            <div id="infoHome" class="sp-modal-footer-info-link">
-              {showHome && <a href={canfarURL} className="account_access_info" title="CANFARHome" target="_blank">
+            <div id="infoHome" className="sp-modal-footer-info-link">
+              {showHome === true && <a href={canfarURL} className="account_access_info" title="CANFARHome" target="_blank">
                 CANFAR Home</a>}
             </div>
 
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.closeModal}>
+            {showClose === true && <Button variant="secondary" onClick={this.closeModal}>
               Close
             </Button>
-            {showReload && <Button className="sp-e-reload" id="pageReloadButton" onClick={this.handleReload}>Reload Portal</Button>}
+            }
+            {showReload === true && <Button className="sp-e-reload" id="pageReloadButton" onClick={this.handleReload}>Reload Portal</Button>}
           </Modal.Footer>
         </Modal>
       </>

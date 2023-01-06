@@ -28,7 +28,7 @@
         },
         User: User,
         UserManager: UserManager,
-        WHOAMI_ENDPOINT: '/access/control/proxy',
+        WHOAMI_ENDPOINT: 'https://www.canfar.net/access/control/proxy',
 
         USER_CREATE_ENDPOINT: '/access/control/proxy',
 
@@ -206,7 +206,7 @@
         _$personalDetailItemsArray
       )
       $.ajax({
-        url: '/access/control/proxy',
+        url: 'https://www.canfar.net/access/control/proxy',
         method: 'POST',
         // contentType: 'application/json',
         // mimeType: 'application/json',

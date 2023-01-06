@@ -1,8 +1,54 @@
-# Getting Started with Create React App
+# Getting Started with Science Portal React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+See notes below about Available npm scripts for local development. 
 
-## Available Scripts
+Science Portal is distributed as a war file.
+
+## Development Environment Notes
+
+## Dependencies
+Node.js
+npm
+react developer tools in chrome: https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi/related?hl=en
+host file entry
+## What files should be found
+
+### On a Fresh download from git
+
+
+
+### where files are to work on them
+src/main/react for react files
+public/js for javascript files
+
+use 'npm start' to start a local developement server
+
+### pointing the local dev environment to resources
+.env folder: what's needed in it, etc.
+
+test data file notes needed
+
+## Build process
+./gradlew clean build
+(todo: can this be made to not need 'sudo')?
+
+build/libs/science-portal<version>).war
+
+ssh to deployment location as science-portal.war
+
+### Dependencies:
+canfar-root.war files:
+- 
+
+### Extra gradle task description
+
+### where files get copied to
+public/js goes to src/main/webapps/dist/js
+react app goes to src/main/webapps/dist/react-app.js
+
+
+## Available npm Scripts
 
 In the project directory, you can run:
 

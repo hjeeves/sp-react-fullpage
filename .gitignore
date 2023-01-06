@@ -11,6 +11,9 @@
 # production
 /build
 
+# distribution
+/src/main/webapp/dist
+
 # misc
 .DS_Store
 .env.local

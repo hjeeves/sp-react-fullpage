@@ -69,9 +69,14 @@ select.form-select, input.form-control {
   float: left;
 }
 
-/*TODO: might not need this one*/
+.sp-card-pill {
+  margin-top: 5px;
+}
+
+
 .sp-float-left-full {
   float:left;
+  width: 100%;
 }
 
 div.sp-card-container {
@@ -101,6 +106,57 @@ div.sp-form {
 
 .sp-form-label {
   font-weight: bold;
+}
+
+.sp-form-placeholder {
+  height:1.75rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  font-size: .875rem;
+  border-radius: 0.25rem;
+  opacity: .35%;
+}
+
+.sp-button-placeholder {
+  height:1.75rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  font-size: .875rem;
+  border-radius: 0.25rem;
+  margin-right: 5px;
+  width: 67px;
+}
+
+.sp-align-right {
+  float: right;
+  align: right;
+}
+
+.sp-button-placeholder-row {
+  opacity: .45;
+}
+
+div.sp-emptylist-card {
+  background-image: linear-gradient(to bottom,#fff 0,#e0e0e0 100%);
+  font: 18px;
+  color: darkgray;
+  height: 200px
+}
+
+.sp-place-holder-type {
+  width: 54px;
+  float: right;
+}
+
+.sp-title-placeholder {
+  height: 75px;
+}
+
+p.sp-form-p {
+  margin-bottom: 0px;
+  opacity: .45;
 }
 
 .sp-button-row {
@@ -161,6 +217,25 @@ div.sp-auth-form-body, div.sp-auth-form-body.input {
   width:100vw;
 }
 
+/* banner css */
+
+.sp-warning-card {
+  border: solid;
+  border-color: gold;
+  margin-bottom: 5px;
+}
+
+.sp-warn-heading {
+  background-color: #fee243;
+  background-image: none;
+  padding: 12px 15px;
+}
+
+.sp-warn-body {
+  background-color: #fffcee;
+  padding: 5px 15px 0px 15px;
+}
+
 
 /* launch form classes */
 
@@ -168,6 +243,68 @@ div.sp-auth-form-body, div.sp-auth-form-body.input {
   margin-top: 5px;
   float: right;
 }
+
+.sp-placeholder {
+  color: darkgrey;
+  opacity: 0.25;
+}
+
+
+.sp-btn-success {
+  background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
+}
+
+div.sp-modal-header {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+#authenticated-nav-dropdown {
+  align-content:
+}
+
+/* remove the Navdropdown caret as there's a button used for
+this nav dropdown rendering */
+#authenticated-nav-dropdown::after{
+  display: none;
+}
+
+.sp-buffer-span-right {
+  margin-right: 5px;
+}
+
+.sp-buffer-span-left {
+  margin-left: 5px;
+}
+
+a.nav-link {
+  font-size: 14px;
+  color: #343a40;
+}
+
+
+
+/* Tooltip styling */
+.sp-b-tooltip > .tooltip-inner {
+  color:black;
+  background-color: darkgray;
+}
+
+.sp-b-tooltip > .tooltip.bottom .tooltip-arrow {
+  background-color: darkgray;
+  bottom: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px 5px 0;
+  border-top-color: darkgray;
+}
+
+.tooltip.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: darkgray;
+}
+
+
 
 /* below this line is the existing/old science-portal css */
 .sp-panel-heading {
@@ -511,31 +648,9 @@ button.sp-session-delete {
   float:right;
 }
 
-/*.sp-b-tooltip > .tooltip > .tooltip-inner {*/
-/*  color:black;*/
-/*  background-color: darkgray;*/
-/*}*/
 
-/*.sp-b-tooltip > .tooltip.top .tooltip-arrow {*/
-/*  bottom: 0;*/
-/*  left: 50%;*/
-/*  margin-left: -5px;*/
-/*  border-width: 5px 5px 0;*/
-/*  border-top-color: darkgray;*/
-/*}*/
 
-.sp-b-tooltip > .tooltip-inner {
-  color:black;
-  background-color: darkgray;
-}
 
-.sp-b-tooltip > .tooltip-arrow {
-  bottom: 0;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px 5px 0;
-  border-top-color: darkgray;
-}
 
 
 
