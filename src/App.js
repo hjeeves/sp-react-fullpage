@@ -19,10 +19,8 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRefresh } from '@fortawesome/free-solid-svg-icons/faRefresh'
 
-//import './react/css/App.css';
-// TODO: is this file *and* App.css necessary?
-// font definitions are in index.css TODO: change these to math CANFAR branding
 import './react/css/index.css'
+
 // This is in the node_modules directory
 import 'bootstrap/dist/css/bootstrap.min.css';
 

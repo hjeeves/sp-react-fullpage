@@ -66,6 +66,11 @@
       setSessionServiceURLs(overrideURLs)
     }
 
+    // Primarily used for testing
+    function setReactAppRef(reactApp) {
+      _selfPortalCore._rApp = reactApp
+    }
+
     // ------------ Page state management functions ------------
 
     function setModal(modalLink, title, msg, showSpinner, showReload, showHome) {
@@ -398,6 +403,7 @@
       handleAjaxError: handleAjaxError,
       setProgressBar: setProgressBar,
       setPageState: setPageState,
+      setReactAppRef: setReactAppRef,
       clearAjaxAlert: clearAjaxAlert,
       setConfirmModal: setConfirmModal,
       hideConfirmModal: hideConfirmModal,

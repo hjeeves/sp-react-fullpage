@@ -48,13 +48,18 @@
 
     // when the react app has mounted itself (which can be a different point time time
     // than document ready,) this function is run to start the Science Portal App
+    // Using this rather than document.ready because running locally the timing doesn't work
+    // otherwise
+
+    // NOTE: bannerText can be uncommented and filled in here to test the banner
+    // NOTE: isDev is required to have authentication be set to true (as there's no local instance of /access
+    // to properly handle authentication
     window.runStartupTasks = () => {
       // Set up controller for Science Portal Session Launch page
       launch_js = new cadc.web.science.portal.PortalApp({
         baseURL: "https://www.canfar.net",
         sessionsResourceID: 'ivo://cadc.nrc.ca/skaha',
-        //bannerText: "",
-        bannerText: "test banner text injected at startup",
+        //bannerText: "test banner text injected at startup",
         contentBase: contentBase,
         URLOverrides: testSessionURLs,
         isDev: true,

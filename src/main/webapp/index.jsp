@@ -38,16 +38,6 @@
 
     <!-- Located in ROOT.war -->
     <script type="application/javascript" src="${baseURL}/canfar/javascript/jquery-2.2.4.min.js"></script>
-<%--    <script type="application/javascript" src="${baseURL}/canfar/jasvascript/bootstrap.min.js"></script>--%>
-
-    <!-- BANNER WARNING -->
-<%--    <div class="panel panel-warning">--%>
-<%--      <div class="panel-heading cadc-warn-heading"></div>--%>
-<%--      <div class="panel-body cadc-warn-body">--%>
-<%--        <p>CADC and CANFAR services will be unavailable from September 16th, 1700PDT to September 20 1200PDT due to a planned power outage.  This outage is required for a major upgrade to the CADC’s data centre power systems.</p>--%>
-<%--      </div>--%>
-<%--    </div>--%>
-    <!-- END BANNER WARNING -->
 
     <!-- Add Promises if missing/broken. -->
     <script type="application/javascript" src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.auto.js"></script>
@@ -63,7 +53,7 @@
     <link  type="text/css" href="/canfar/css/cadc.gdpr.cookie.css" rel="stylesheet" media="screen">
 
     <!-- Adding css for info banner - needs to override bootstrap panel styling -->
-    <link type="text/css" href="/canfar/css/cadc.info.banner.css?version=@version@" rel="stylesheet" media="screen">
+<%--    <link type="text/css" href="/canfar/css/cadc.info.banner.css?version=@version@" rel="stylesheet" media="screen">--%>
 
 
     <!--[if lt IE 9]>
